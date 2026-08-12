@@ -83,7 +83,7 @@ Reviewer gets `git diff main...feature/<ticket>` plus the approved plan — neve
 Ship these five files into `.claude/agents/` (see `agents/` in this skill directory for the source):
 
 - **planner** (`Read, Grep, Glob, Write`, model: sonnet) — writes one scoped plan per ticket; read-only against source.
-- **critic** (`Read`, model: sonnet) — reviews a plan against a fixed rubric; never the instance that wrote it.
+- **critic** (`Read, Write`, model: sonnet) — reviews a plan against a fixed rubric and writes the critique file; never the instance that wrote the plan.
 - **builder** (`Read, Write, Edit, Bash`, model: sonnet) — implements exactly one approved plan on its own branch.
 - **tester** (`Bash, Read`, model: haiku) — runs the test suite plus the ticket-specific check; reports PASS/FAIL, never fixes code.
 - **reviewer** (`Bash, Read`, model: sonnet) — reviews the branch diff against the plan; diff-scoped context only.

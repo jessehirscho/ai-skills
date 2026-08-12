@@ -5,10 +5,20 @@ description: Use whenever deciding whether and how to delegate work to subagents
 
 # Subagents: when and how to delegate
 
-The general judgment layer for using the Agent tool mid-session. Every dispatch
-costs a cold start — a fresh agent re-derives context you already have. Only
-pay that cost when it buys you something: parallelism, context isolation, or
-an independent perspective.
+The general judgment layer for delegating work to a subagent mid-session —
+when to delegate, how to write a dispatch prompt, foreground vs. background,
+parallel dispatch. This judgment applies to any harness with a subagent/
+delegation primitive; the concrete example used throughout is Claude Code's
+`Agent` tool, since that's what's available in this environment. Codex CLI
+and Copilot CLI don't currently expose an equivalent multi-agent dispatch
+mechanism, so this skill's guidance mainly applies when working in Claude
+Code or another harness with similar delegation capability — if your harness
+has no such primitive, treat this as background judgment rather than an
+actionable procedure.
+
+Every dispatch costs a cold start — a fresh agent re-derives context you
+already have. Only pay that cost when it buys you something: parallelism,
+context isolation, or an independent perspective.
 
 ## When TO delegate
 

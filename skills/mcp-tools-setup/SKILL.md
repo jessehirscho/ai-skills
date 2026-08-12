@@ -5,8 +5,14 @@ description: Use whenever the user wants to discover, install, configure, or tro
 
 # MCP tools setup
 
-Wiring existing MCP servers into Claude Code: finding one worth adding, installing it at the
+Wiring existing MCP servers into your harness: finding one worth adding, installing it at the
 right scope, handling auth, and debugging it when it won't connect.
+
+This doc uses Claude Code's CLI (`claude mcp ...`, `.mcp.json`) as the concrete example
+throughout, since it's the most fully documented. The underlying concepts — scopes, transports,
+auth patterns, debugging approach — apply to configuring MCP servers in any MCP-compatible
+harness (Codex CLI, opencode, Copilot CLI, Pi, etc.); check that harness's own docs for its exact
+config syntax.
 
 ## Scopes
 

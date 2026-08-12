@@ -17,7 +17,7 @@ As of August 2026: the published stable TypeScript SDK is `@modelcontextprotocol
 | Minimal Python server | [Python quick start](#python-quick-start) |
 | Writing a good tool description | [Defining a tool](#defining-a-tool) |
 | stdio vs HTTP/SSE | [Transports](#transports) |
-| Wire it into Claude Code | [Registering with Claude Code](#registering-with-claude-code) |
+| Wire it into your harness | [Registering with your harness](#registering-with-your-harness) |
 | Error handling | [Error handling](#error-handling) |
 | Things that go wrong | [Common pitfalls](#common-pitfalls) |
 
@@ -168,7 +168,9 @@ app.listen(3000);
 
 Python (FastMCP) equivalent: `mcp.run(transport="streamable-http")` (add `mount_path`/`port` as needed), or `mcp.run(transport="sse")` for the legacy transport.
 
-## Registering with Claude Code
+## Registering with your harness
+
+Every MCP-compatible harness has its own way of registering a server — the commands below are Claude Code's, shown as a concrete worked example. Codex CLI registers servers under `[mcp_servers.<name>]` in `config.toml`; opencode uses the `mcp` block in `opencode.json`; other harnesses (Copilot CLI, Pi, Claude Desktop, etc.) each have their own config surface. Check your harness's own docs for the exact syntax rather than assuming the Claude Code commands below apply directly.
 
 ```bash
 # stdio — local process, most common

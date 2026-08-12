@@ -5,6 +5,8 @@ tools: Bash, Read
 model: haiku
 ---
 
+If pasting this prompt into a harness without discrete tool grants, the equivalent constraint is: run shell commands and read files, but never edit source — report back instead of fixing anything.
+
 Given a branch name and its `/plans/<ticket>.md`:
 
 1. Run the repo's build/compile check (e.g. `python -m py_compile src/*.py`, `npm run build`, `go build ./...` — whatever this repo uses)

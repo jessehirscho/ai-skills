@@ -16,6 +16,18 @@ I automate," "audit my workflow," or "what's eating my time across sessions." Do
 to audit a codebase, a PR, or a single session's work — this is about behavior across
 sessions.
 
+## Scope: Claude Code only
+
+This skill's transcript-mining technique depends on Claude Code's specific local session
+storage — the `~/.claude/projects/<escaped-cwd>/*.jsonl` format and location. It does not
+work for other harnesses (Codex CLI, Copilot CLI, Pi, opencode, etc.). If the user wants an
+equivalent audit for another harness, first check whether that harness persists local
+session logs at all — many don't, or only keep them in-memory/ephemeral. If it does, the
+same friction-pattern-mining methodology here (tool-call frequency, repeated clarifying
+questions, permission-prompt patterns) still applies conceptually, but the extraction
+commands below need to be rewritten for that harness's actual log format and location —
+don't assume they translate as-is.
+
 ## Where the data lives
 
 Every Claude Code session is logged as JSONL, one file per session, one JSON object per

@@ -17,16 +17,19 @@ Don't use it for a single one-line fix, or for a change so tangled across files 
 
 ## One-time setup
 
-1. Copy `agents/*.md` from this skill into `.claude/agents/` at the target repo's root. Claude Code auto-discovers them there and invokes them through the `Agent` tool.
+1. If your harness supports persistent subagent/role definitions (Claude Code's `.claude/agents/`, or an equivalent in your harness), copy `agents/*.md` from this skill into that location at the target repo's root — Claude Code auto-discovers them there and invokes them through the `Agent` tool. If your harness has no such mechanism, paste the relevant agent's system-prompt body directly into each phase's session instead.
 2. Adjust each agent's test commands (Phase 5) to match the repo's actual toolchain — the shipped agents assume `pytest`/`python -m py_compile` as placeholders; swap for the repo's real lint/build/test commands.
-3. Add this pointer block to the repo's `CLAUDE.md`:
+3. Add this pointer block to the repo's `CLAUDE.md` (or the equivalent persistent-instructions file for your harness):
    ```
    ## Development workflow
    Follow the dev-pipeline skill for any multi-ticket change: plan → critique →
    iterate → branch → build → test → review → merge. Subagent definitions live
-   in .claude/agents/. Do not skip the critique phase, and do not merge a
+   in .claude/agents/ (or pasted per-phase for harnesses without persistent
+   subagent definitions). Do not skip the critique phase, and do not merge a
    ticket whose plan wasn't APPROVED.
    ```
+
+**Note on harnesses without a parallel-subagent primitive:** not every harness has a native equivalent of Claude Code's `Agent` tool for dispatching multiple subagents in parallel — Codex CLI and Copilot CLI, as of now, don't expose the same multi-agent dispatch. On those harnesses, phases 1-2 (plan + critique) and phases 4-6 (build + test + review) can still be run — just as a sequence of separate, focused sessions/prompts instead of parallel dispatches — using the same handoff-artifact discipline described below: one file per phase, and nothing but that file crosses the boundary into the next session.
 
 ## Phase 0 — Scope
 
@@ -34,11 +37,11 @@ Read only the repo's spec/README, not the whole tree. Confirm the ticket list. F
 
 ## Phase 1 — Plan (parallel, `planner` subagent)
 
-Launch one `planner` subagent per ticket, in parallel. Pass each one only its ticket name, scope, and the exact relevant file paths — a subagent's context starts empty, so anything it needs must be in the prompt string, never assumed. Each planner writes exactly one file: `/plans/<ticket>.md`. No source code is touched in this phase.
+Launch one `planner` subagent per ticket, in parallel, via your harness's subagent/delegation primitive (e.g. Claude Code's `Agent` tool; on harnesses without a parallel-subagent primitive, run each ticket's planning as its own sequential session instead — see the note in "One-time setup"). Pass each one only its ticket name, scope, and the exact relevant file paths — a subagent's context starts empty, so anything it needs must be in the prompt string, never assumed. Each planner writes exactly one file: `/plans/<ticket>.md`. No source code is touched in this phase.
 
 ## Phase 2 — Critique (parallel, `critic` subagent, fresh instance)
 
-For each plan, launch a `critic` subagent — never the same subagent instance that wrote it. Fixed rubric (see `agents/critic.md`). Output: `/plans/<ticket>.critique.md` with **APPROVE** or **REVISE** plus specific, actionable fixes.
+For each plan, launch a `critic` subagent — never the same subagent instance that wrote it, and never the same session/context that produced the plan, even on harnesses running phases sequentially. Fixed rubric (see `agents/critic.md`). Output: `/plans/<ticket>.critique.md` with **APPROVE** or **REVISE** plus specific, actionable fixes.
 
 ## Phase 3 — Iterate
 
@@ -51,7 +54,7 @@ Once APPROVED:
 git checkout main && git pull
 git checkout -b feature/<ticket>
 ```
-Launch one `builder` subagent, given only the approved plan and the files it names. It implements exactly what the plan says — no scope creep. Small, scoped commits, each referencing the ticket.
+Launch one `builder` subagent (or, on sequential-session harnesses, a fresh build-only session), given only the approved plan and the files it names. It implements exactly what the plan says — no scope creep. Small, scoped commits, each referencing the ticket.
 
 ## Phase 5 — Test (per branch, `tester` subagent)
 
@@ -73,14 +76,14 @@ Reviewer gets `git diff main...feature/<ticket>` plus the approved plan — neve
 
 - Never let a subagent read the whole repo — pass exact file paths in its prompt, always.
 - Cap critique/revision loops at 2 rounds.
-- Use a general-purpose `Explore` subagent for open-ended "where is X handled" questions instead of the main session grepping around manually.
+- Use a general-purpose read-only "explore" subagent (Claude Code's `Explore` agent, or a comparable read-only search session in your harness) for open-ended "where is X handled" questions instead of the main session grepping around manually.
 - Batch independent reads before writes; don't re-open a file already in context this turn.
 - Keep the repo's `CLAUDE.md` short — point to a workflow doc (or this skill) for pipeline detail rather than duplicating it inline.
 - Prefer targeted edits over full-file rewrites once a file exists.
 
 ## Subagent definitions
 
-Ship these five files into `.claude/agents/` (see `agents/` in this skill directory for the source):
+Ship these five files into `.claude/agents/` if your harness supports persistent subagent definitions, or paste each one's body into its phase's session otherwise (see `agents/` in this skill directory for the source):
 
 - **planner** (`Read, Grep, Glob, Write`, model: sonnet) — writes one scoped plan per ticket; read-only against source.
 - **critic** (`Read`, model: sonnet) — reviews a plan against a fixed rubric; never the instance that wrote it.

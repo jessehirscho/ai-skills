@@ -50,15 +50,17 @@ list that never gets run.
 ## Running a SKILL.md dispatch eval
 
 Guessing whether a description "sounds specific enough" is not a
-dispatch eval — dispatch is decided by a fresh Claude session matching
-the request against the description, so that's what you have to actually
-observe.
+dispatch eval — dispatch is decided by a fresh session of the model/harness
+you're evaluating, matching the request against the description, so that's
+what you have to actually observe.
 
 Method:
-1. For each example in your eval set, open a **fresh** Claude Code
-   session (or use the Agent tool with a general-purpose agent that has
-   no prior context) and give it *only* the example request — nothing
-   that hints you're testing a skill, no mention of the skill's name.
+1. For each example in your eval set, open a **fresh** session of
+   whichever model/harness you're evaluating (or use your harness's
+   subagent/delegation tool, if it has one, with a general-purpose agent
+   that has no prior context — otherwise just open a new session) and
+   give it *only* the example request — nothing that hints you're testing
+   a skill, no mention of the skill's name.
 2. Watch whether it invokes the skill (visible as a `Skill` tool call, or
    ask it afterward "did you use a skill for that, and which one").
 3. Record trigger / no-trigger against what you expected.
@@ -75,7 +77,9 @@ Method:
 1. Pick (or construct) a real or realistic sandboxed task from the
    subagent's actual target domain — not a toy example, something with
    the same shape as what it'll really be asked to do.
-2. Run it via the Agent tool with that subagent type.
+2. Run it via your harness's subagent/delegation tool (e.g. Claude Code's
+   Agent tool) with that subagent type — or, if your harness has no such
+   mechanism, a fresh session given the same system prompt.
 3. Score the transcript against this rubric:
    - Did it stay within its **granted tools** (no attempt to do something
      that would've required a tool it wasn't given)?

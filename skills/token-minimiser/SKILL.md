@@ -22,7 +22,7 @@ Token cost isn't one lever, it's death by a thousand cuts: re-reading files, exp
 
 ## Search and exploration
 
-- For open-ended "where is X handled" / "which files reference Y" questions, use a purpose-built search agent (Claude Code's `Explore` subagent, or equivalent) instead of the main session manually grepping, following dead ends, and accumulating all of that noise in its own context.
+- For open-ended "where is X handled" / "which files reference Y" questions, delegate to a purpose-built, read-only search agent if your harness has an equivalent to Claude Code's `Explore` subagent — instead of the main session manually grepping, following dead ends, and accumulating all of that noise in its own context. If your harness has no such delegate, do targeted greps yourself rather than reading whole files to explore.
 - Give the search agent a specific breadth ("quick" vs "very thorough") matching how confident you are about where the answer lives — don't default to maximal search depth for a lookup you're 90% sure is in one directory.
 - Manual exploration in the main thread is fine for a single targeted grep; delegate as soon as it turns into more than 2-3 speculative searches.
 

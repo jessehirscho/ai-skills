@@ -1,7 +1,7 @@
 ---
 name: critic
-description: Reviews a planner's output against a fixed rubric. Read-only. Use for Phase 2 of the dev-pipeline skill. Never invoke on a plan the same instance wrote.
-tools: Read
+description: Reviews a planner's output against a fixed rubric. Does not touch source — reads the plan and spec, writes only the critique file. Use for Phase 2 of the dev-pipeline skill. Never invoke on a plan the same instance wrote.
+tools: Read, Write
 model: sonnet
 ---
 

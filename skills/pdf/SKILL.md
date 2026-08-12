@@ -7,7 +7,7 @@ description: Use this skill whenever the user wants to do anything with PDF file
 
 ## Overview
 
-This guide covers essential PDF processing operations using Python libraries and command-line tools. If you need to fill out a PDF form, read FORMS.md and follow its instructions.
+This guide covers essential PDF processing operations using Python libraries and command-line tools. If you need to fill out a PDF form, check for a `FORMS.md` in this skill directory and follow its instructions — it does not exist yet in this repo, so create and document it per-project the first time form-filling is needed (see "Next Steps" below).
 
 ## Quick Start
 

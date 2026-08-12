@@ -25,6 +25,7 @@ Personal Claude Code skills, built from patterns actually used across my own pro
 - **[codex-cli-setup](skills/codex-cli-setup/SKILL.md)** — auditing/improving an OpenAI Codex CLI setup: `config.toml`, `AGENTS.md`, approval/sandbox modes, profiles.
 - **[opencode-setup](skills/opencode-setup/SKILL.md)** — auditing/improving an opencode setup: config precedence, multi-provider/model config, MCP, keybinds.
 - **[pi-harness-setup](skills/pi-harness-setup/SKILL.md)** — auditing/improving a Pi coding-agent setup (`pi.dev` / `badlogic/pi-mono`): settings, `AGENTS.md`/`CLAUDE.md` concatenation, project trust model, extensions.
+- **[agent-handover](skills/agent-handover/SKILL.md)** — routing phases of a task across different LLMs/model tiers (e.g. a strong model plans, a mid-tier model implements, a different model reviews), with a written handover artifact at each boundary instead of a shared conversation. Distinct from `subagents`/`dev-pipeline`, which cover same-model delegation.
 
 ## Usage
 

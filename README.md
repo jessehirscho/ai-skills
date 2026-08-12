@@ -26,6 +26,13 @@ Personal Claude Code skills, built from patterns actually used across my own pro
 - **[opencode-setup](skills/opencode-setup/SKILL.md)** — auditing/improving an opencode setup: config precedence, multi-provider/model config, MCP, keybinds.
 - **[pi-harness-setup](skills/pi-harness-setup/SKILL.md)** — auditing/improving a Pi coding-agent setup (`pi.dev` / `badlogic/pi-mono`): settings, `AGENTS.md`/`CLAUDE.md` concatenation, project trust model, extensions.
 - **[agent-handover](skills/agent-handover/SKILL.md)** — routing phases of a task across different LLMs/model tiers (e.g. a strong model plans, a mid-tier model implements, a different model reviews), with a written handover artifact at each boundary instead of a shared conversation. Distinct from `subagents`/`dev-pipeline`, which cover same-model delegation.
+- **[seo-audit](skills/seo-audit/SKILL.md)** — traditional search engine SEO audit: crawlability, on-page technical checks, structured data validation, Core Web Vitals as a ranking factor, local SEO. Companion to `geo-audit` for AI-citability.
+- **[geo-audit](skills/geo-audit/SKILL.md)** — Generative Engine Optimization: auditing content for citability by AI answer engines (ChatGPT Search, AI Overviews, Perplexity) — AI crawler access, direct-answer-first content structure, and manual citation-check measurement, since there's no Search Console equivalent yet.
+- **[vercel-deploy-audit](skills/vercel-deploy-audit/SKILL.md)** — a fast pre-promote checklist for Vercel deploys: env var parity, build sanity, preview-vs-prod diffing, rollback readiness. Scoped to the checklist, not deployment mechanics (see the built-in Vercel skills for that).
+- **[content-spec-writer](skills/content-spec-writer/SKILL.md)** — writing well-scoped tickets/specs before they enter `dev-pipeline`: template, sizing guidance, file-scope declarations that feed the pipeline's overlap-flagging.
+- **[prompt-eval](skills/prompt-eval/SKILL.md)** — lightweight verification for a system prompt, subagent definition, or SKILL.md description before shipping it: dispatch evals, behavior evals, and before/after regression checks. Companion to `agent-builder`/`skill-builder`.
+- **[changelog-writer](skills/changelog-writer/SKILL.md)** — turning a commit/PR range into a user-facing changelog entry: implementation-to-impact translation, Keep a Changelog categories, what to leave out.
+- **[incident-writeup](skills/incident-writeup/SKILL.md)** — a blameless postmortem template for production incidents: quantified impact, real timeline, root cause past the first proximate cause, and prioritized action items.
 
 ## Usage
 

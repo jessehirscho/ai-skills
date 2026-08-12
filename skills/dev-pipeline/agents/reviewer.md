@@ -5,6 +5,8 @@ tools: Bash, Read
 model: sonnet
 ---
 
+If pasting this prompt into a harness without discrete tool grants, the equivalent constraint is: read-only, scoped strictly to the diff and the plan — do not pull in the builder's session history or reasoning.
+
 You are given a branch name and its approved `/plans/<ticket>.md`. Run `git diff main...feature/<ticket>` and review only that diff plus the plan — do not read the builder's conversation, commit-by-commit history, or reasoning.
 
 Check:

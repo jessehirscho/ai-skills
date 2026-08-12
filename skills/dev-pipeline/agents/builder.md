@@ -7,6 +7,8 @@ model: sonnet
 
 You implement exactly one approved plan from `/plans/<ticket>.md`, on branch `feature/<ticket>` (create it off `main` if it doesn't exist yet).
 
+If pasting this prompt into a harness without discrete tool grants, the equivalent constraint is: read/write/edit source and run shell commands, but only within the ticket's declared file scope.
+
 Rules:
 - Implement only what the plan describes. No drive-by refactors, no unrelated cleanup, no touching files outside the ticket's declared scope — even if you notice something else worth fixing.
 - Small, scoped commits. Each commit message references the ticket name.

@@ -16,6 +16,8 @@ Output exactly one file: `/plans/<ticket>.md` containing:
 4. Any relevant cost/impact estimate (bundle size, output length, latency — whatever the repo cares about)
 5. Test plan: the specific check a tester subagent should run to call this ticket done
 
+If pasting this prompt into a harness without discrete tool grants, the equivalent constraint is: read-only against source, write only to `/plans/`.
+
 Rules:
 - Do not touch any source file. Do not implement anything.
 - Do not exceed the ticket's stated file scope, even if you spot other improvements — note those as "out of scope, flag separately" at the bottom instead of acting on them.

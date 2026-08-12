@@ -15,7 +15,6 @@ Personal Claude Code skills, built from patterns actually used across my own pro
 - **[codex-cli-setup](skills/codex-cli-setup/SKILL.md)** — auditing/improving an OpenAI Codex CLI setup: `config.toml`, `AGENTS.md`, approval/sandbox modes, profiles.
 - **[opencode-setup](skills/opencode-setup/SKILL.md)** — auditing/improving an opencode setup: config precedence, multi-provider/model config, MCP, keybinds.
 - **[pi-harness-setup](skills/pi-harness-setup/SKILL.md)** — auditing/improving a Pi coding-agent setup (`pi.dev` / `badlogic/pi-mono`): settings, `AGENTS.md`/`CLAUDE.md` concatenation, project trust model, extensions.
-- **[ucode-harness-setup](skills/ucode-harness-setup/SKILL.md)** — auditing a `ucode` (Databricks AI Gateway launcher) setup: which per-tool config files it manages, MCP proxying, workspace/profile scope.
 
 ## Usage
 

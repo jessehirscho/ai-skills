@@ -17,6 +17,17 @@ Note: "Pi" is a common/ambiguous name. Don't confuse this with Raspberry Pi,
 Inflection AI's "Pi" chatbot, or any other unrelated product — this skill is
 specifically about the coding-agent CLI harness above.
 
+## Confidence note — read before trusting details below
+
+Pi is a small, actively-developed OSS project with less documentation surface
+than the bigger harnesses. File locations, flag names (`--tools`,
+`--exclude-tools`, `--approve`/`--no-approve`, `--mode json`/`--mode rpc`),
+and the exact built-in tool list below were compiled from the project's docs
+and repo at one point in time and have **not** been cross-checked against a
+running `pi --help`. Treat this file as a starting map, not ground truth —
+confirm specifics against `pi --help` or the current pi.dev docs before
+relying on an exact flag or file path in a script.
+
 ## Config surface
 
 | Purpose | Location |

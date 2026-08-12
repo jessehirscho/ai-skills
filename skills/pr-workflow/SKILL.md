@@ -106,7 +106,7 @@ Diagnose from `--log-failed` before re-running anything. If a rerun is warranted
 | Add a general comment | `gh pr comment <number> --body "..."` |
 | Edit title/body | `gh pr edit <number> --title "..." --body "..."` |
 | Mark draft ready | `gh pr ready <number>` |
-| Convert to draft | `gh pr edit <number> --add-label ...` (no direct undo-ready; close+reopen as draft if needed) |
+| Convert to draft | no direct `gh pr` command to undo "ready"; close and reopen as draft if needed (`gh pr close <number>` then `gh pr reopen <number> --draft` if your `gh` version supports it) |
 | Close without merging | `gh pr close <number>` |
 | Reopen a closed PR | `gh pr reopen <number>` |
 | Checkout a PR locally | `gh pr checkout <number>` |

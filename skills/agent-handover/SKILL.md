@@ -1,6 +1,6 @@
 ---
 name: agent-handover
-description: Use whenever a task should be split across multiple LLMs or model tiers with an explicit handover between them — e.g. a strong/expensive model plans, a mid-tier model implements, and a fast/cheap or different-vendor model reviews. Covers when multi-model handover is worth the coordination cost, what to pass at each handover point, how to prevent context loss between models, and how this differs from same-model subagent delegation (`subagents`, `dev-pipeline`).
+description: Use whenever a task should be split across different LLM vendors or product lines with an explicit handover between them — e.g. GPT plans, Claude implements, then a different vendor's model reviews; or "I want Opus to plan this and a different provider's model to review it." Covers when a cross-vendor handover is worth the coordination cost, what to pass at each handover point, how to prevent context loss between models, and how this differs from same-vendor subagent delegation across tiers like Opus/Sonnet/Haiku (`subagents`, `dev-pipeline`).
 ---
 
 # Multi-LLM Agent Handover
@@ -9,7 +9,7 @@ A pattern for routing different phases of one task to different models — chose
 
 ## How this differs from same-model subagent delegation
 
-This repo's `subagents` and `dev-pipeline` skills cover delegating to fresh instances of the *same* underlying model (e.g. Claude planner → Claude builder → Claude reviewer, all Sonnet or a Sonnet/Haiku mix within one vendor's lineup). **Agent handover is about crossing model or vendor boundaries** — e.g. Opus plans, Sonnet implements, a different vendor's model reviews. The same phase-splitting logic applies, but the coordination cost is higher because there's no shared session, no shared tool-call history, and often no shared harness conventions (CLAUDE.md vs. AGENTS.md, different tool names, different context window sizes). Everything below assumes you're the one manually gluing the phases together — no runtime automatically hands work from one model's CLI to another's today.
+This repo's `subagents` and `dev-pipeline` skills cover delegating to fresh instances *within one vendor's lineup* (e.g. Claude planner → Claude builder → Claude reviewer, all Sonnet, or a mix of Opus/Sonnet/Haiku tiers). **Agent handover is about crossing vendor or product-line boundaries** — e.g. Opus plans, a different vendor's model implements, and a third vendor's model reviews. The same phase-splitting logic applies, but the coordination cost is higher because there's no shared session, no shared tool-call history, and often no shared harness conventions (CLAUDE.md vs. AGENTS.md, different tool names, different context window sizes). Everything below assumes you're the one manually gluing the phases together — no runtime automatically hands work from one model's CLI to another's today.
 
 ## When it's worth the coordination overhead
 
@@ -38,8 +38,8 @@ This is the same discipline as this repo's `dev-pipeline` skill's planner→buil
 
 ## A concrete three-phase example: plan → implement → review
 
-1. **Plan (strong/expensive model).** Give it the problem statement, constraints, and codebase context it needs to make the hard calls. Output: one written plan document per the artifact structure above. The planning model does not touch code.
-2. **Implement (mid-tier model).** Give it *only* the plan document and the exact file paths it names — not the planning conversation. It implements exactly what the plan says; if the plan turns out wrong once it's in the code, it should stop and flag rather than improvise past the plan's stated intent.
+1. **Plan (strong/expensive model, e.g. from vendor A).** Give it the problem statement, constraints, and codebase context it needs to make the hard calls. Output: one written plan document per the artifact structure above. The planning model does not touch code.
+2. **Implement (a different vendor's model, e.g. vendor B).** Give it *only* the plan document and the exact file paths it names — not the planning conversation. It implements exactly what the plan says; if the plan turns out wrong once it's in the code, it should stop and flag rather than improvise past the plan's stated intent.
 3. **Review (a different model/vendor from the implementer, ideally also different from the planner).** Give it the diff and the plan — not the implementer's reasoning trail. It checks the diff against the plan, not against its own idea of what "should" have been built. A cross-vendor reviewer is most valuable here specifically because it has no shared blind spots with whichever model wrote the plan or the code.
 
 Each arrow above is a handover artifact boundary: plan.md, then diff + plan.md, then a verdict. Nothing else crosses.
